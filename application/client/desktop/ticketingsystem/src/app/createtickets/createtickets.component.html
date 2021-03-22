@@ -1,0 +1,44 @@
+<h2 class="screen-align">Createtickets</h2>
+<div id="template-ihx5" class="row">
+    <div id="template-iz9f" class="cell">
+        <label id="template-i6jl" class="label">name</label>
+        <input id="template-ij10h" [(ngModel)]="tickets.name" [ngModelOptions]="{standalone: true}"
+        class="input form-control" />
+    </div>
+    <div id="template-i5pt" class="cell">
+        <label id="template-iloof" class="label">description</label>
+        <input id="template-iayfe" [(ngModel)]="tickets.description"
+        [ngModelOptions]="{standalone: true}" class="input form-control" />
+    </div>
+    <div id="template-ih89" class="cell">
+        <label id="template-ibncq" class="label">types</label>
+        <div id="template-iie7j" class="">
+            <ng-select id="template-i46xv" name="dynamicdropdown_template-i46xv" [searchable]="true"
+            [virtualScroll]="true" [items]="servicetypesitemArray" bindLabel="name"
+            bindValue="name" [(ngModel)]="tickets.types" [ngModelOptions]="{standalone: true}"
+            (click)="servicetypesGpGetAllValues()" class="form-control"></ng-select>
+        </div>
+    </div>
+</div>
+<div id="template-ib88" class="row">
+    <div id="template-i8u1" class="cell">
+        <label id="template-ictiz" class="label">severity</label>
+        <div id="template-ib11t" class="">
+            <ng-select id="template-ipvfh" name="dynamicdropdown_template-ipvfh" [searchable]="true"
+            [virtualScroll]="true" [items]="SeverityitemArray" bindLabel="name" bindValue="name"
+            [(ngModel)]="tickets.severity" [ngModelOptions]="{standalone: true}" (click)="SeverityGpGetAllValues()"
+            class="form-control"></ng-select>
+        </div>
+    </div>
+    <div id="template-iiqw" class="cell">
+        <label id="template-i3r0o" class="label">assignee</label>
+        <div id="template-idk1h" class="">
+            <ng-select id="template-ig256" name="dynamicdropdown_template-ig256" [searchable]="true"
+            [virtualScroll]="true" [items]="assigneesitemArray" bindLabel="name" bindValue="name"
+            [(ngModel)]="tickets.assignee" [ngModelOptions]="{standalone: true}" (click)="assigneesGpGetAllValues()"
+            class="form-control"></ng-select>
+        </div>
+    </div>
+    <div id="template-ijzo" class="cell"></div>
+</div>
+<button id="template-ijh8u" (click)="GpCreate()" class="button btn btn-primary">Create</button>

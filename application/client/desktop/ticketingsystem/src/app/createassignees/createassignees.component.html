@@ -1,0 +1,15 @@
+<h2 class="screen-align">Createassignees</h2>
+<div id="template-i3es" class="row">
+    <div id="template-ic6f" class="cell">
+        <label id="template-iu95" class="label">name</label>
+        <input id="template-iq5u" placeholder="Enter your Name" [(ngModel)]="assignees.name"
+        [ngModelOptions]="{standalone: true}" class="input form-control" />
+    </div>
+    <div id="template-iybd" class="cell">
+        <label id="template-iott" class="label">email</label>
+        <input id="template-itmb" placeholder="Enter your email"
+        [(ngModel)]="assignees.email" [ngModelOptions]="{standalone: true}" class="input form-control"
+        />
+    </div>
+</div>
+<button id="template-iosd" (click)="GpCreate()" class="button btn btn-primary">Create</button>

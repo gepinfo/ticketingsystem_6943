@@ -1,0 +1,123 @@
+version: "3.8"
+services:
+  mongo:
+    image: geppettotest/mongo-local:april2020
+    container_name: mongo-6943
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - ticketingsystem_6943-volume:/data/db
+    ports:
+      - "27018:27017"
+    healthcheck:
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongo admin -u root -p root --quiet | grep 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  camunda:
+    image: geppettodistribution/camunda-local:Jan2021
+    container_name: camunda-6943
+    ports:
+      - "0000:8080"
+
+  authproxy:
+    build: ../../../application/services/default_services/authproxy
+    image: authproxy-6943
+    container_name: authproxy-6943
+    ports:
+      - "0000:8001"
+    env_file: .env
+    depends_on:
+      - mongo
+      - camunda
+
+  securitymanager:
+    build: ../../../application/services/default_services/securitymanager
+    image: securitymanager-6943
+    container_name: securitymanager-6943
+    ports:
+      - "8003:8003"
+    env_file: .env
+    depends_on:
+      - mongo
+      - camunda
+
+  camundaservice:
+    build: ../../../application/services/default_services/camunda
+    image: camundaservice-6943
+    container_name: camundasvc-6943
+    ports:
+      - "8002:8002"
+    env_file: .env
+    depends_on:
+      - mongo
+      - camunda
+      - securitymanager
+
+  apigateway:
+    build: ../../../application/services/custom_services/apigateway
+    image: apigateway-6943
+    container_name: apigateway-6943
+    ports:
+      - "8000:8000"
+    env_file: .env
+    depends_on:
+      - camunda
+      - camundaservice
+      - authproxy
+      - securitymanager
+      - tickets
+      - servicetypes
+      - severity
+      - assignees
+
+
+
+  tickets: 
+    build: ../../../application/services/custom_services/tickets
+    image: tickets-6943
+    container_name: tickets-6943
+    ports: 
+      - 8007:8007
+    env_file: .env
+    depends_on:
+      - mongo
+
+  servicetypes: 
+    build: ../../../application/services/custom_services/servicetypes
+    image: servicetypes-6943
+    container_name: servicetypes-6943
+    ports: 
+      - 8008:8008
+    env_file: .env
+    depends_on:
+      - mongo
+
+  severity: 
+    build: ../../../application/services/custom_services/severity
+    image: severity-6943
+    container_name: severity-6943
+    ports: 
+      - 8009:8009
+    env_file: .env
+    depends_on:
+      - mongo
+
+  assignees: 
+    build: ../../../application/services/custom_services/assignees
+    image: assignees-6943
+    container_name: assignees-6943
+    ports: 
+      - 8010:8010
+    env_file: .env
+    depends_on:
+      - mongo
+
+
+volumes:
+  ticketingsystem_6943-volume:
+    driver: local

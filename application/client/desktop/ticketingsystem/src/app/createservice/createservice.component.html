@@ -1,0 +1,14 @@
+<h2 class="screen-align">Createservice</h2>
+<div id="template-if18" class="row">
+    <div id="template-iqmj" class="cell">
+        <label id="template-ixr8" class="label">Name</label>
+        <input id="template-ip6u" [(ngModel)]="servicetypes.name"
+        [ngModelOptions]="{standalone: true}" class="input form-control" />
+    </div>
+    <div id="template-i3z7" class="cell">
+        <label id="template-i6kd" class="label">Description</label>
+        <input id="template-inz5" [(ngModel)]="servicetypes.description"
+        [ngModelOptions]="{standalone: true}" class="input form-control" />
+    </div>
+</div>
+<button id="template-i3ic" (click)="GpCreate()" class="button btn btn-primary">Create</button>
